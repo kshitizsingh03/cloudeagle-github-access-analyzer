@@ -1,0 +1,26 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/resources/*.yaml
+!**/src/main/resources/*.properties
+*.class
+
+### Log files ###
+*.log
+logs/
+
+### IDE and editors ###
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+bin/
+**/out/
+.vscode/
+
+### Secrets ###
+# Do NOT check in tokens/secrets
+.env
+secret.properties
+**/GITHUB_TOKEN
+**/GITHUB_TOKEN.txt
