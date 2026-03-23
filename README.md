@@ -9,7 +9,7 @@ This service integrates with the GitHub REST API to:
 3.  **Aggregate** data to provide a user-centric view: "Which users have access to which repositories, and with what permissions?"
 4.  **Expose** this data via a secure and scalable REST API.
 
-## 🛡 Architecture & Data Flow
+##  Architecture & Data Flow
 
 ```mermaid
 sequenceDiagram
@@ -36,12 +36,12 @@ sequenceDiagram
     C-->>U: Returns JSON Formatted Report (200 OK)
 ```
 
-## 🏗 System Design Strategy
+##  System Design Strategy
 - **Asynchronous Processing**: Uses `Flux` and `Mono` for non-blocking network calls.
 - **Aggregator Pattern**: Merges many-to-many relationships (Users vs Repositories) into a single, user-centric data model.
 - **Smart Security**: Spring Security manages the authorization header passing while protecting the service from anonymous access to critical report nodes.
 
-## 🛠 Tech Stack
+##  Tech Stack
 -   **Java 17**
 -   **Spring Boot 3.1.5**
 -   **WebFlux / WebClient** (Asynchronous non-blocking API calls)
@@ -51,7 +51,7 @@ sequenceDiagram
 -   **Maven** (Build tool)
 -   **SpringDoc OpenAPI / Swagger** (Interactive documentation)
 
-## ⚙️ Setup Instructions
+##  Setup Instructions
 
 ### Prerequisites
 -   Java 17 or higher
@@ -99,7 +99,7 @@ curl -X GET "http://localhost:8080/api/github/access-report?org=google"
 Once the application is running, access Swagger UI here:
 `http://localhost:8080/swagger-ui/index.html`
 
-## 📊 Sample Response
+##  Sample Response
 ```json
 {
   "users": [
@@ -129,7 +129,7 @@ Once the application is running, access Swagger UI here:
 }
 ```
 
-## 🏗 Design Decisions
+##  Design Decisions
 1.  **Reactive Architecture**: Used `WebClient` and Project Reactor (`Mono`, `Flux`) to handle thousands of API calls concurrently without blocking threads.
 2.  **Scalable Pagination**: Implemented recursive pagination handling (via `Flux.range` and `concatMap`) to ensure all repositories and collaborators are fetched regardless of organization size.
 3.  **Aggregation Strategy**: Used a `ConcurrentHashMap` with synchronized lists to aggregate data in a thread-safe manner during parallel stream processing.
@@ -141,7 +141,7 @@ Once the application is running, access Swagger UI here:
     -   `controller`: REST endpoint definition and Swagger integration.
 6.  **Caching**: Integrated Spring Cache to minimize redundant external API calls for frequently requested organization reports.
 
-## 🖼️ Proof of Operation (Actual Execution)
+##  Proof of Operation (Actual Execution)
 
 > [!NOTE]
 > All screenshots included in this repository are **real outputs** generated on the local development system. They show the actual execution of the application, including: API response output, Postman testing results, and console logs from the Spring Boot application. These are taken directly from the working project.
@@ -161,7 +161,7 @@ The log output below confirms the internal processing flow: organization reposit
 
 ![Console Logs](docs/console_logs.png)
 
-## 🧪 Error Handling
+##  Error Handling
 -   **404 Not Found**: If the organization does not exist on GitHub.
 -   **401 Unauthorized**: If the provided GitHub token is invalid.
 -   **429 / 403 Forbidden**: If GitHub API rate limits are exceeded.
