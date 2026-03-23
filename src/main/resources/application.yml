@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+github:
+  api:
+    base-url: https://api.github.com
+    token: ${GITHUB_TOKEN:DEFAULT_TOKEN_CHANGE_ME} # Replace with your PAT or set environment variable
+
+spring:
+  cache:
+    type: caffeine
+    cache-names:
+      - github-report
+    caffeine:
+      spec: expireAfterWrite=30m,maximumSize=100
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    com.github.report: DEBUG
+    org.springframework.web.reactive.function.client: DEBUG
