@@ -1,6 +1,4 @@
-# github-access-report
 
-**GitHub Repository**: [https://github.com/kshitizsingh03/cloudeagle-github-access-analyzer](https://github.com/kshitizsingh03/cloudeagle-github-access-analyzer)
 
 # GitHub Organization Access Analyzer
 
@@ -12,7 +10,7 @@ A high-performance, reactive Spring Boot service designed to audit repository ac
 ---
 >>>>>>> eb4bc5d (docs: Complete professional README with design decisions, scale strategy, and architecture brief)
 
-## 🏗 System Architecture & Design Decisions
+##  System Architecture & Design Decisions
 
 ### 1. Reactive & Non-Blocking (Project Reactor)
 To meet the **Scale Requirement** (100+ repositories, 1000+ users), I chose **Spring WebFlux** over traditional blocking MVC. 
@@ -107,7 +105,7 @@ A close-up of the final JSON report, showing how data is grouped by user for eas
 
 ##  Setup Instructions
 =======
-## 🚀 Execution Guide
+## Execution Guide
 >>>>>>> eb4bc5d (docs: Complete professional README with design decisions, scale strategy, and architecture brief)
 
 ### Prerequisites
@@ -132,7 +130,7 @@ The service will start on `http://localhost:8080`.
 <<<<<<< HEAD
 ##  Configuration
 =======
-## 📡 API Usage
+##  API Usage
 >>>>>>> eb4bc5d (docs: Complete professional README with design decisions, scale strategy, and architecture brief)
 
 ### Endpoint: Access Report
@@ -153,7 +151,7 @@ Access the interactive API explorer at:
 ---
 >>>>>>> eb4bc5d (docs: Complete professional README with design decisions, scale strategy, and architecture brief)
 
-## 🔍 Assumptions & Scale Handling
+##  Assumptions & Scale Handling
 
 <<<<<<< HEAD
 ##  Future Improvements
@@ -165,7 +163,7 @@ Access the interactive API explorer at:
 
 ---
 
-## 📸 Verification & Evidence
+##  Verification & Evidence
 
 ### 1. Application Startup & Real-time Logs
 ![Startup](docs/console_logs.png)
@@ -178,5 +176,5 @@ Access the interactive API explorer at:
 
 ---
 
-## ⚖️ License
+##  License
 MIT License - Created for Professional Assessment.
