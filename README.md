@@ -2,7 +2,7 @@
 
 A production-ready Spring Boot microservice that provides a mapping of users to their repository access and permission levels within a GitHub organization.
 
-## 🚀 Overview
+##  Overview
 This service integrates with the GitHub REST API to:
 1.  **Iterate** through all repositories of a given organization.
 2.  **Retrieve** collaborators for each repository.
