@@ -1,31 +1,50 @@
+# github-access-report
+
+**GitHub Repository**: [https://github.com/kshitizsingh03/cloudeagle-github-access-analyzer](https://github.com/kshitizsingh03/cloudeagle-github-access-analyzer)
+
 # GitHub Organization Access Analyzer
 
-A clean, production-ready tool to understand who has access to which repositories within your GitHub organization.
+A high-performance, reactive Spring Boot service designed to audit repository access across large GitHub organizations.
 
+<<<<<<< HEAD
 ##  Project Overview
+=======
+---
+>>>>>>> eb4bc5d (docs: Complete professional README with design decisions, scale strategy, and architecture brief)
 
-Managing access in a large GitHub organization can get complicated. This project helps organizations quickly see which users have access to which repositories and what their permission levels are (admin, write, or read). It connects directly to the GitHub API, fetches all relevant data, and generates a structured report that’s easy to read and process.
+## 🏗 System Architecture & Design Decisions
 
-Instead of manually checking each repository, you can use this simple REST API to get a complete mapping of your team’s access across the entire organization.
+### 1. Reactive & Non-Blocking (Project Reactor)
+To meet the **Scale Requirement** (100+ repositories, 1000+ users), I chose **Spring WebFlux** over traditional blocking MVC. 
+- **The Problem**: Fetching collaborators for 100 repositories sequentially would take minutes (100 * latency).
+- **The Solution**: Using non-blocking `WebClient` combined with `flatMap(..., concurrency: 10)`, the service fetches multiple lists in parallel, staying within rate limits while significantly reducing total response time.
 
+<<<<<<< HEAD
 ##  Features
+=======
+### 2. Intelligent Pagination
+The GitHub API paginates results at 100 items per page. 
+- My `GithubClient` uses a `Flux.range` with `takeUntil(list -> list.size() < 100)` to automatically fetch all pages of repositories and collaborators without manual page management.
+- This ensures that organizations with 500+ repositories are processed accurately and efficiently.
+>>>>>>> eb4bc5d (docs: Complete professional README with design decisions, scale strategy, and architecture brief)
 
-- **Automated Access Mapping**: Automatically maps every user to their list of accessible repositories.
-- **Permission Tracking**: Identify the exact access level (Admin, Write, or Read) for every collaborator.
-- **Scalable Design**: Built to handle organizations with hundreds of repositories and thousands of users without hitting rate limits easily.
-- **Fast Performance**: Uses parallel processing and caching to make sure reports are generated as quickly as possible.
-- **Interactive UI**: Includes Swagger documentation so you can explore the API directly from your browser.
+### 3. Caching (Caffeine)
+To prevent hitting GitHub's 5,000 requests/hour rate limit for repeated requests, I implemented a local **Caffeine Cache**. 
+- Common organization reports are cached for a configurable duration (default 10 minutes), providing instant responses for secondary lookups.
 
+<<<<<<< HEAD
 ##  Tech Stack
+=======
+### 4. Resilient Error Handling
+A centralized `GlobalExceptionHandler` handles common API failures gracefully:
+- **401 Unauthorized**: Clean message regarding invalid PAT tokens.
+- **404 Not Found**: For invalid organization names.
+- **403 Forbidden**: Handling GitHub Rate Limits specifically with actionable advice.
+>>>>>>> eb4bc5d (docs: Complete professional README with design decisions, scale strategy, and architecture brief)
 
-- **Java 17**: Using the latest stable features.
-- **Spring Boot 3**: For the core application framework.
-- **Spring WebFlux / WebClient**: Used for non-blocking, asynchronous network calls.
-- **Spring Security**: To securely handle and protect GitHub tokens.
-- **Caffeine Caching**: To speed up repeat requests and reduce API load.
-- **Maven**: For dependency management.
-- **Lombok**: To keep the code clean and readable.
+---
 
+<<<<<<< HEAD
 ##  How It Works
 
 1. **Request**: You send a request to the API with the organization name.
@@ -87,43 +106,77 @@ A close-up of the final JSON report, showing how data is grouped by user for eas
 ![API Output Sample](docs/api_sample.png)
 
 ##  Setup Instructions
+=======
+## 🚀 Execution Guide
+>>>>>>> eb4bc5d (docs: Complete professional README with design decisions, scale strategy, and architecture brief)
 
 ### Prerequisites
 - Java 17 or higher
 - Maven 3.8+
-- A GitHub Personal Access Token (PAT)
+- GitHub Personal Access Token (Classic or Fine-grained)
 
-### 1. Clone & Build
+### 1. Configure Authentication
+You must provide a GitHub PAT with `repo` and `read:org` scopes.
+- **Option A (Env Variable)**: `export GITHUB_TOKEN=your_token_here`
+- **Option B (application.yml)**: Update `src/main/resources/application.yml`.
+
+### 2. Launch the Application
 ```bash
 mvn clean install
-```
-
-### 2. Run the App
-```bash
 mvn spring-boot:run
 ```
+The service will start on `http://localhost:8080`.
 
-The service will be live at `http://localhost:8080`.
+---
 
+<<<<<<< HEAD
 ##  Configuration
+=======
+## 📡 API Usage
+>>>>>>> eb4bc5d (docs: Complete professional README with design decisions, scale strategy, and architecture brief)
 
-You need to provide your GitHub token so the app can talk to the API. You can do this in two ways:
+### Endpoint: Access Report
+**GET** `/api/github/access-report?org={orgName}`
 
-1. **Environment Variable**: Set `GITHUB_TOKEN` on your machine.
-2. **Application Properties**: Update `src/main/resources/application.yml` with your token.
+**Example Call**:
+```bash
+curl "http://localhost:8080/api/github/access-report?org=google"
+```
 
-*Note: Make sure your token has `repo` and `read:org` scopes.*
+### Swagger Documentation (Interactive UI)
+Access the interactive API explorer at:
+`http://localhost:8080/swagger-ui.html`
 
+<<<<<<< HEAD
 ##  Design Decisions
+=======
+---
+>>>>>>> eb4bc5d (docs: Complete professional README with design decisions, scale strategy, and architecture brief)
 
-- **Why WebClient?**: I chose `WebClient` over the older `RestTemplate` because it's built for reactive, non-blocking calls. This allows the app to fetch dozens of collaborators' lists at the same time without waiting for each one to finish sequentially.
-- **Parallel Processing**: I used Project Reactor's parallel processing capabilities to ensure that an organization with 100+ repos doesn't take minutes to process.
-- **Caching**: Repeat requests for the same org are served from a local Caffeine cache, which protects you from being throttled by GitHub's rate limits.
-- **Global Exception Handling**: I added a central place to handle errors (like 404s for invalid orgs or 401s for bad tokens) so the API always returns a consistent, helpful message.
+## 🔍 Assumptions & Scale Handling
 
+<<<<<<< HEAD
 ##  Future Improvements
+=======
+- **Scalability**: The system is tested against the "100 repo / 1000 user" constraint. By using an aggregator `Map<String, List<RepoDetail>>` with `ConcurrentHashMap`, we ensure thread-safety during parallel data collection.
+- **Concurrency**: Parallelism is capped at `10` to avoid triggering GitHub's secondary rate limits while maintaining high throughput.
+- **Security**: Hardcoding secrets is avoided; the system prioritizes environment variables for token management.
+>>>>>>> eb4bc5d (docs: Complete professional README with design decisions, scale strategy, and architecture brief)
 
-- **Database Persistence**: Add a database to store historical access data for auditing.
-- **Web Dashboard**: Create a simple frontend to visualize the reports instead of just raw JSON.
-- **Excel/PDF Export**: Allow users to download the report as an Excel sheet for management reviews.
-- **Webhooks**: Automatically refresh the report when a new member is added to the GitHub organization.
+---
+
+## 📸 Verification & Evidence
+
+### 1. Application Startup & Real-time Logs
+![Startup](docs/console_logs.png)
+
+### 2. Successful Test Suite Execution
+![Tests](docs/test_results.png)
+
+### 3. API Response Validation
+![Postman](docs/postman_proof.png)
+
+---
+
+## ⚖️ License
+MIT License - Created for Professional Assessment.
