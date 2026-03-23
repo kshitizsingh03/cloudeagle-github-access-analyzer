@@ -2,13 +2,13 @@
 
 A clean, production-ready tool to understand who has access to which repositories within your GitHub organization.
 
-## 📝 Project Overview
+##  Project Overview
 
 Managing access in a large GitHub organization can get complicated. This project helps organizations quickly see which users have access to which repositories and what their permission levels are (admin, write, or read). It connects directly to the GitHub API, fetches all relevant data, and generates a structured report that’s easy to read and process.
 
 Instead of manually checking each repository, you can use this simple REST API to get a complete mapping of your team’s access across the entire organization.
 
-## ✨ Features
+##  Features
 
 - **Automated Access Mapping**: Automatically maps every user to their list of accessible repositories.
 - **Permission Tracking**: Identify the exact access level (Admin, Write, or Read) for every collaborator.
@@ -16,7 +16,7 @@ Instead of manually checking each repository, you can use this simple REST API t
 - **Fast Performance**: Uses parallel processing and caching to make sure reports are generated as quickly as possible.
 - **Interactive UI**: Includes Swagger documentation so you can explore the API directly from your browser.
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 - **Java 17**: Using the latest stable features.
 - **Spring Boot 3**: For the core application framework.
@@ -26,7 +26,7 @@ Instead of manually checking each repository, you can use this simple REST API t
 - **Maven**: For dependency management.
 - **Lombok**: To keep the code clean and readable.
 
-## ⚙️ How It Works
+##  How It Works
 
 1. **Request**: You send a request to the API with the organization name.
 2. **Discovery**: The service fetches all repositories belonging to that organization.
@@ -34,13 +34,13 @@ Instead of manually checking each repository, you can use this simple REST API t
 4. **Aggregation**: The logic then "flips" the data—instead of looking at it repo-by-repo, it groups everything by USER.
 5. **Response**: You get back a clean JSON report showing every user and their assigned permissions.
 
-## 📡 API Endpoint
+##  API Endpoint
 
 **GET** `/api/github/access-report?org={orgName}`
 
 Example: `http://localhost:8080/api/github/access-report?org=google`
 
-## 📊 Sample Response
+##  Sample Response
 
 ```json
 {
@@ -62,7 +62,7 @@ Example: `http://localhost:8080/api/github/access-report?org=google`
 }
 ```
 
-## 📸 Verification & Screenshots
+##  Verification & Screenshots
 
 To ensure the project is production-ready, I've included authentic screenshots of the application during development and testing.
 
@@ -86,7 +86,7 @@ A close-up of the final JSON report, showing how data is grouped by user for eas
 
 ![API Output Sample](docs/api_sample.png)
 
-## 🚀 Setup Instructions
+##  Setup Instructions
 
 ### Prerequisites
 - Java 17 or higher
@@ -105,7 +105,7 @@ mvn spring-boot:run
 
 The service will be live at `http://localhost:8080`.
 
-## 🔑 Configuration
+##  Configuration
 
 You need to provide your GitHub token so the app can talk to the API. You can do this in two ways:
 
@@ -114,14 +114,14 @@ You need to provide your GitHub token so the app can talk to the API. You can do
 
 *Note: Make sure your token has `repo` and `read:org` scopes.*
 
-## 🧠 Design Decisions
+##  Design Decisions
 
 - **Why WebClient?**: I chose `WebClient` over the older `RestTemplate` because it's built for reactive, non-blocking calls. This allows the app to fetch dozens of collaborators' lists at the same time without waiting for each one to finish sequentially.
 - **Parallel Processing**: I used Project Reactor's parallel processing capabilities to ensure that an organization with 100+ repos doesn't take minutes to process.
 - **Caching**: Repeat requests for the same org are served from a local Caffeine cache, which protects you from being throttled by GitHub's rate limits.
 - **Global Exception Handling**: I added a central place to handle errors (like 404s for invalid orgs or 401s for bad tokens) so the API always returns a consistent, helpful message.
 
-## 🔮 Future Improvements
+##  Future Improvements
 
 - **Database Persistence**: Add a database to store historical access data for auditing.
 - **Web Dashboard**: Create a simple frontend to visualize the reports instead of just raw JSON.
